@@ -3,7 +3,7 @@ var movies = ["The Matrix", "The Notebook", "Mr. Nobody", "The Lion King"];
 var results;
 
 
-// Function for displaying movie data
+// Function for displaying movie buttons
 function renderButtons() {
 
     // Deleting the movie buttons prior to adding new movie buttons
@@ -56,7 +56,7 @@ function diaplaygiphy() {
         // In this case, the "this" keyword refers to the button that was clicked
         var giphy = $(this).attr("data-name");
         
-        // Constructing a URL to search Giphy for the name of the person who said the quote
+        // Constructing a URL to search Giphy for the name of the movie 
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + giphy + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10"
 
         // Performing our AJAX GET request
@@ -75,7 +75,7 @@ function diaplaygiphy() {
                 // Looping over every result item
                 for (var i = 0; i < results.length; i++) {
 
-                    // Only taking action if the photo has an appropriate rating
+                    
                     // Creating a div for the gif
                     var gifDiv = $("<div>");
 
@@ -85,37 +85,41 @@ function diaplaygiphy() {
                     // Creating a paragraph tag with the result item's rating
                     var p = $("<p>").text("Rating: " + rating);
 
-                    // Creating an image tag
+                
 
 
-                    // Creating and storing an image tag
+                    // Creating and storing an image tag in a variable Image
                     var Image = $("<img>");
 
-                    // Setting the catImage src attribute to imageUrl
+                    // Setting the Image src attributes to imageUrl
                     Image.attr("src", results[i].images.fixed_height_still.url);
+                    // Setting the Image datastill and dataanimate and datastate attributes
                     Image.attr("data-still", results[i].images.fixed_height_still.url);
                     Image.attr("data-animate",results[i].images.original.url);
                     Image.attr("alt", "image");
                     Image.attr("data-state", "still");
-                    
+                    // Adding a class to the Images that are generated so we can use the class for onclick function
                     Image.addClass("gif");
 
-                    // Appending the paragraph and personImage we created to the "gifDiv" div we created
+                    // Appending the paragraph and Image we created to the "gifDiv" div we created
                 
                     gifDiv.append(p);
                     gifDiv.append(Image);
 
-                    // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
+                    // A  ppending  the gifDiv to the "#images" div in the HTML
                     $("#images").append(gifDiv);
 
 
                    
                 }
+                // calling the onload function to pause and play the images
                 onload();
                 });   
     });
  }
-function onload(){
+           // creating a function onload() to play and pause gif's
+            function onload(){
+
               $(".gif").click(function() {
 
                 console.log(results);
@@ -123,7 +127,7 @@ function onload(){
               var state = $(this).attr("data-state");
               // If the clicked image's state is still, update its src attribute to what its data-animate value is.
              // Then, set the image's data-state to animate
-               // Else set src to the data-still value
+               // Else set src to the data-still value and the data-state to still
                for (var i = 0; i < results.length; i++) {
                if (state === "still") {
                 $(this).attr("src", $(this).attr("data-animate"));
@@ -140,7 +144,9 @@ function onload(){
        
 
         }
-function reset(){
 
+    // to reset the page
+     function reset(){
+    // emptying the elements in the images div to load the new results when the buttons are clicked
     $("#images").empty();
-}
+    }
