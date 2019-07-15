@@ -47,9 +47,9 @@ renderButtons();
 
 
 
-$(document).on("click", ".movie", diaplaygiphy);
+$(document).on("click", ".movie", displaygiphy);
 
-function diaplaygiphy() {
+function displaygiphy() {
     
     $("button").on("click", function () {
         
